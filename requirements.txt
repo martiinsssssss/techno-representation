@@ -1,0 +1,17 @@
+numpy
+pandas
+librosa
+soundfile
+matplotlib
+scikit-learn
+umap-learn
+plotly
+jupyter
+ipykernel
+ipywidgets
+streamlit
+torch
+torchaudio
+transformers
+sentencepiece
+encodec
