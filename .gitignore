@@ -1,3 +1,5 @@
 .venv/
 data/
 figures/
+__pycache__/
+.ipynb_checkpoints/
