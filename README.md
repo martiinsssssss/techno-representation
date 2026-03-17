@@ -22,7 +22,7 @@ Each representation is evaluated by projecting samples into 2D with **PCA** and 
 
 ## 📦 Dataset
 
-The dataset comes from **[MusicRadar](https://www.musicradar.com/news/tech/free-music-samples-royalty-free-loops-hits-and-multis-to-download)** — specifically the *Warehouse Techno Samples* and *Rave Synth Samples* packs. These are royalty-free sample packs widely used in electronic music production.
+The dataset comes from **[MusicRadar](https://www.musicradar.com/news/tech/free-music-samples-royalty-free-loops-hits-and-multis-to-download)** — specifically the *Warehouse Techno Samples*, *Techno bass* and *Rave Synth Samples* packs. These are royalty-free sample packs widely used in electronic music production.
 
 Samples are organised into **11 sound categories**:
 
