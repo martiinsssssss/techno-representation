@@ -121,14 +121,26 @@ class CLAPFeatureExtractor:
         y, sr = load_audio_mono(filepath, sr=48000)
 
         inputs = self.processor(
-            audios=[y],
+            audio=y,
             sampling_rate=sr,
             return_tensors="pt"
         )
 
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
-        audio_embeds = self.model.get_audio_features(**inputs)
-        emb = audio_embeds.squeeze(0).detach().cpu().numpy().astype(np.float32)
+
+        audio_features = self.model.get_audio_features(**inputs)
+        if isinstance(audio_features, torch.Tensor):
+            emb_t = audio_features
+        elif hasattr(audio_features, "audio_embeds"):
+            emb_t = audio_features.audio_embeds
+        elif hasattr(audio_features, "pooler_output"):
+            emb_t = audio_features.pooler_output
+        elif hasattr(audio_features, "last_hidden_state"):
+            emb_t = audio_features.last_hidden_state.mean(dim=1)
+        else:
+            raise TypeError(f"Unexpected CLAP audio output type: {type(audio_features)}")
+
+        emb = emb_t.squeeze(0).detach().cpu().numpy().astype(np.float32)
 
         feats = {}
         feats["clap_dim"] = int(emb.shape[0])
