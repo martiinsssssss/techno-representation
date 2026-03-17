@@ -1,0 +1,4 @@
+feature_set,silhouette_score
+classical,0.09466909632912432
+encodec,0.028566502043007053
+clap,0.3005508163555572
