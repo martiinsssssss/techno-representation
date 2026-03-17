@@ -1,4 +1,5 @@
 from pathlib import Path
+import numpy as np
 import pandas as pd
 import streamlit as st
 import plotly.express as px
@@ -7,7 +8,43 @@ import librosa.display
 import matplotlib.pyplot as plt
 import soundfile as sf
 
-FEATURE_DIR = Path("data/features")
+LABEL_COLORS = {
+    "Bass": "#00f5d4",
+    "Claps": "#ff4d6d",
+    "Cymbals": "#ffd60a",
+    "FX n Noise": "#9b5de5",
+    "Hats": "#f15bb5",
+    "Hi Perc": "#00bbf9",
+    "Kicks": "#ff006e",
+    "Lo Perc": "#adb5bd",
+    "Snares": "#fb5607",
+    "Synth1": "#3a86ff",
+    "Synth2": "#8338ec",
+}
+
+BG_COLOR = "#0b0b0f"
+AX_COLOR = "#12131a"
+GRID_COLOR = "#2a2d36"
+TEXT_COLOR = "#f5f5f5"
+
+FEATURE_DIR = Path("data/features_musicradar")
+
+st.set_page_config(page_title="Techno Audio Representations Explorer", layout="wide")
+
+st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-color: {BG_COLOR};
+        color: {TEXT_COLOR};
+    }}
+    h1, h2, h3, h4, h5, h6, p, div, label, span {{
+        color: {TEXT_COLOR};
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 @st.cache_data
@@ -24,10 +61,31 @@ def make_spectrogram(filepath):
     if y.ndim == 2:
         y = y.mean(axis=1)
 
-    D = librosa.amplitude_to_db(abs(librosa.stft(y.astype("float32"))), ref=max)
-    fig, ax = plt.subplots(figsize=(8, 3))
-    librosa.display.specshow(D, sr=sr, x_axis="time", y_axis="log", ax=ax)
-    ax.set_title(Path(filepath).name)
+    y = y.astype("float32")
+    D = librosa.amplitude_to_db(np.abs(librosa.stft(y)), ref=np.max)
+
+    fig, ax = plt.subplots(figsize=(8, 3), facecolor=BG_COLOR)
+    ax.set_facecolor(AX_COLOR)
+
+    img = librosa.display.specshow(
+        D,
+        sr=sr,
+        x_axis="time",
+        y_axis="log",
+        ax=ax,
+        cmap="magma",
+    )
+
+    ax.set_title(Path(filepath).name, color=TEXT_COLOR)
+    ax.tick_params(colors=TEXT_COLOR)
+
+    for spine in ax.spines.values():
+        spine.set_color("#3a3d46")
+
+    cbar = plt.colorbar(img, ax=ax, format="%+2.0f dB")
+    cbar.ax.yaxis.set_tick_params(color=TEXT_COLOR)
+    plt.setp(plt.getp(cbar.ax.axes, "yticklabels"), color=TEXT_COLOR)
+
     plt.tight_layout()
     return fig
 
@@ -49,7 +107,6 @@ st.subheader("Metadata")
 st.write({
     "filename": selected_row["filename"],
     "label": selected_row["label"],
-    "filepath": selected_row["filepath"],
 })
 
 st.subheader("Spectrogram")
@@ -76,10 +133,26 @@ fig_scatter = px.scatter(
     x=x_col,
     y=y_col,
     color="label",
+    color_discrete_map=LABEL_COLORS,
     symbol="selected",
     hover_data=["filename", "label"],
     title=view,
 )
+
+fig_scatter.update_traces(
+    marker=dict(size=11, line=dict(width=1, color="white"), opacity=0.92)
+)
+
+fig_scatter.update_layout(
+    paper_bgcolor=BG_COLOR,
+    plot_bgcolor=AX_COLOR,
+    font=dict(color=TEXT_COLOR, size=12),
+    title_font=dict(size=18, color=TEXT_COLOR),
+    legend_title_text="Category",
+    xaxis=dict(showgrid=True, gridcolor=GRID_COLOR, zeroline=False, color=TEXT_COLOR),
+    yaxis=dict(showgrid=True, gridcolor=GRID_COLOR, zeroline=False, color=TEXT_COLOR),
+)
+
 st.plotly_chart(fig_scatter, use_container_width=True)
 
 st.subheader("A few feature values")
