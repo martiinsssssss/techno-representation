@@ -33,7 +33,7 @@ def process_representation(feat_df, feature_cols, rep_name, output_dir):
         f"{rep_name}_pca_y",
         "label",
         f"{rep_name.capitalize()} - PCA",
-        f"figures/{rep_name}_pca.png"
+        f"figures_musicradar/{rep_name}_pca.png"
     )
 
     save_scatter_plot(
@@ -42,7 +42,7 @@ def process_representation(feat_df, feature_cols, rep_name, output_dir):
         f"{rep_name}_umap_y",
         "label",
         f"{rep_name.capitalize()} - UMAP",
-        f"figures/{rep_name}_umap.png"
+        f"figures_musicradar/{rep_name}_umap.png"
     )
 
     sil = compute_silhouette(X, feat_df["label"].values)
