@@ -140,25 +140,9 @@ Then open [http://localhost:8501](http://localhost:8501) in your browser.
 
 ## 📊 Example Results
 
-Scatter plots (UMAP, dark theme) are pre-generated in `figures_musicradar/`:
+Scatter plots are pre-generated in `figures_musicradar/`:
 
 | Classical UMAP | EnCodec UMAP | CLAP UMAP |
 |:---:|:---:|:---:|
 | ![classical](figures_musicradar/classical_umap_dark.png) | ![encodec](figures_musicradar/encodec_umap_dark.png) | ![clap](figures_musicradar/clap_umap_dark.png) |
 
----
-
-## 🔬 Key Findings
-
-- **CLAP** produces the most semantically coherent clusters — categories like *Kicks*, *Snares*, and *Synth* are well separated, reflecting its training on audio-language pairs.
-- **EnCodec** captures codec-level texture patterns and shows reasonable grouping, but merges some timbral neighbours.
-- **Classical** features perform surprisingly well for simple spectral categories (e.g. *Hats* vs *Kicks*) but struggle with semantically similar textures.
-
----
-
-## 📚 References
-
-- [EnCodec — Meta AI](https://github.com/facebookresearch/encodec)
-- [CLAP — LAION](https://github.com/LAION-AI/CLAP)
-- [MusicRadar Free Sample Packs](https://www.musicradar.com/news/tech/free-music-samples-royalty-free-loops-hits-and-multis-to-download)
-- [UMAP](https://umap-learn.readthedocs.io/), [librosa](https://librosa.org/), [scikit-learn](https://scikit-learn.org/)
