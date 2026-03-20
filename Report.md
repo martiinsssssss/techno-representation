@@ -1,5 +1,12 @@
 # **Representation Quality for Generative Audio Workflows: A Comparative Study of Classical Features, Encodec Features, and CLAP Embeddings on a Manually Curated Techno Dataset**
 
+Martina Delgado Cabrerizo
+
+---------
+To have a better visualization of the tables and images, is necessary to clone this [Github Repo](https://github.com/martiinsssssss/techno-representation.git) and read the file firectly from it. Also, it provides the full implementation used in this project The most important component for exploration is the main notebook (techno_audio_representations.ipynb), where the full pipeline can be run and modified interactively.
+
+--------
+
 ## Abstract
 
 This project compares three audio representation families for generative-audio preparation tasks on a manually curated techno one-shot dataset from MusicRadar (399 files, 11 classes): classical descriptors, Encodec features, and CLAP embeddings. Each representation is evaluated with PCA/UMAP visualization, silhouette score, pairwise class-separation analysis, cross-validated supervised classification, and nearest-neighbor listening checks. The results are consistent across methods: CLAP performs best (silhouette 0.3006, accuracy 0.9824, macro-F1 0.9840), classical features rank second, and Encodec ranks third for this task. The study provides an actionable conclusion for dataset navigation and future conditioning strategies in creative ML workflows.
@@ -125,11 +132,6 @@ Future work includes comparing additional embeddings (for example VGGish), analy
 
 Representation choice strongly affects downstream generative-audio workflows. In this project, CLAP provided the clearest structure across unsupervised, supervised, and qualitative retrieval analyses, making it a strong candidate for future conditioning and dataset-navigation tasks. The study is exploratory, but it is also actionable: it provides a concrete representation decision and a reproducible analysis framework for the next stage of generative experiments.
 
-## 8. Code
-
-The repository contains the full implementation used in this project, including feature extraction code, analysis scripts, generated figures, and output files. The most important component for exploration is the main notebook (techno_audio_representations.ipynb), where the full pipeline can be run and modified interactively to inspect embeddings, plots, and listening-based comparisons.
-
-Repository link: [Github Repo](https://github.com/martiinsssssss/techno-representation.git)
 
 ## References
 
